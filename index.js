@@ -1,21 +1,26 @@
 const path=require('path')
 const express=require('express')
 const app=express()
+const { config, engine } = require('express-edge');
+
 
 app.use(express.static('public'))
+app.use(engine);
+app.set('views', `${__dirname}/views`);
+
 
 app.get('/',(req,res)=>{
-res.sendFile(path.resolve(__dirname,'pages/index.html'))
+res.render('index') //inedx.edge
 
 })
 
 app.get('/about',(req,res)=>{
-    res.sendFile(path.resolve(__dirname,'pages/about.html'))
+    res.render('about') //about.edge
 
     })
 
     app.get('/contact',(req,res)=>{
-        res.sendFile(path.resolve(__dirname,'pages/contact.html'))
+        res.render('contact') //about.edge
     
         })
 app.listen(3000,()=>{
