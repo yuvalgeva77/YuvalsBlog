@@ -18,8 +18,12 @@ app.use(express.urlencoded({
   extended: true
 }));
 
-app.get('/', (req, res) => {
-    res.render('index') //inedx.edge
+app.get('/', async(req, res) => {
+    const allPosts=await Post.find({})
+    console.log(allPosts)
+    res.render('index',{
+        allPosts
+    }) //inedx.edge
 
 })
 
