@@ -1,8 +1,8 @@
-const path=require('path')
-const express=require('express')
-const app=express()
+const path = require('path')
+const express = require('express')
+const app = express()
 const { config, engine } = require('express-edge');
-const mongoose=require('mongoose')
+const mongoose = require('mongoose')
 mongoose.connect('mongodb://localhost/blog')
 
 
@@ -11,21 +11,26 @@ app.use(engine);
 app.set('views', `${__dirname}/views`);
 
 
-app.get('/',(req,res)=>{
-res.render('index') //inedx.edge
+app.get('/', (req, res) => {
+    res.render('index') //inedx.edge
 
 })
 
-app.get('/about',(req,res)=>{
+app.get('/about', (req, res) => {
     res.render('about') //about.edge
 
-    })
+})
 
-    app.get('/contact',(req,res)=>{
-        res.render('contact') //about.edge
-    
-        })
-app.listen(3000,()=>{
+app.get('/contact', (req, res) => {
+    res.render('contact') //about.edge
+
+})
+
+app.get('/posts/new', (req, res) => {
+    res.render('create') //create.edge
+
+})
+app.listen(3000, () => {
     console.log('app listening in port 3000')
 })
 
