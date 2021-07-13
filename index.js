@@ -4,12 +4,19 @@ const app = express()
 const { config, engine } = require('express-edge');
 const mongoose = require('mongoose')
 mongoose.connect('mongodb://localhost/blog')
-
+// const bodyParser = require('body-parser');
+// const { urlencoded } = require('body-parser');
+const Post=require('./database/models/Post')
 
 app.use(express.static('public'))
 app.use(engine);
 app.set('views', `${__dirname}/views`);
-
+// app.use(bodyParser.json())
+// app.use(bodyParser.urlencoded({extended:true}))
+app.use(express.json());
+app.use(express.urlencoded({
+  extended: true
+}));
 
 app.get('/', (req, res) => {
     res.render('index') //inedx.edge
@@ -29,6 +36,13 @@ app.get('/contact', (req, res) => {
 app.get('/posts/new', (req, res) => {
     res.render('create') //create.edge
 
+})
+app.post('/posts/store', (req, res) => {
+    Post.create(req.body,(error,post)=>{
+        console.log(req.body)
+        res.redirect('/')
+
+    })
 })
 app.listen(3000, () => {
     console.log('app listening in port 3000')
