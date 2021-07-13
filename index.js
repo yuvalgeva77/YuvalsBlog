@@ -26,6 +26,16 @@ app.get('/', async(req, res) => {
     }) //inedx.edge
 
 })
+app.get('/post/:id', async(req, res) => {
+    console.log(req.params)
+    const post=await Post.findById(req.params.id)
+
+    console.log(post)
+    res.render('post',{
+        post
+    }) 
+
+})
 
 app.get('/about', (req, res) => {
     res.render('about') //about.edge
@@ -41,6 +51,7 @@ app.get('/posts/new', (req, res) => {
     res.render('create') //create.edge
 
 })
+
 app.post('/posts/store', (req, res) => {
     Post.create(req.body,(error,post)=>{
         console.log(req.body)
@@ -48,6 +59,7 @@ app.post('/posts/store', (req, res) => {
 
     })
 })
+
 app.listen(3000, () => {
     console.log('app listening in port 3000')
 })
