@@ -11,6 +11,8 @@ const homePageController=require('./controllers/homePage')
 const storePostController=require('./controllers/storePost')
 const aboutPageController=require('./controllers/aboutPage')
 const contactPageController=require('./controllers/contactPage')
+const registerPageController=require('./controllers/registerPage')
+const newUserController=require('./controllers/newUser')
 
 
 app.use(express.static('public'))
@@ -29,7 +31,9 @@ app.get('/about',aboutPageController )
 app.get('/contact', contactPageController)
 app.get('/posts/new',createPostController);
 app.post('/posts/store', storePostController);
+app.post('/users/new', newUserController);
 
+app.get('/register',registerPageController)
 app.listen(3000, () => {
     console.log('app listening in port 3000')
 })
