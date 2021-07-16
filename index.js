@@ -7,6 +7,7 @@ mongoose.connect('mongodb://localhost/blog')
 // const bodyParser = require('body-parser');
 // const { urlencoded } = require('body-parser');
 const Post=require('./database/models/Post')
+const fileUpload = require('express-fileupload');
 
 app.use(express.static('public'))
 app.use(engine);
@@ -17,10 +18,11 @@ app.use(express.json());
 app.use(express.urlencoded({
   extended: true
 }));
+app.use(fileUpload());
 
 app.get('/', async(req, res) => {
     const allPosts=await Post.find({})
-    console.log(allPosts)
+    //console.log(allPosts)
     res.render('index',{
         allPosts
     }) //inedx.edge
@@ -53,12 +55,18 @@ app.get('/posts/new', (req, res) => {
 })
 
 app.post('/posts/store', (req, res) => {
-    Post.create(req.body,(error,post)=>{
-        console.log(req.body)
-        res.redirect('/')
+       // console.log(req.body)
+        //console.log(req.files)
+        const{image}=req.files
+        image.mv(path.resolve(__dirname,'public/posts', image.name),(error)=>{
+            console.log(path.resolve(__dirname,'public/posts', image.name))
+            Post.create(req.body,(error,post)=>{
+                res.redirect('/')
 
-    })
-})
+        });
+
+    });
+});
 
 app.listen(3000, () => {
     console.log('app listening in port 3000')

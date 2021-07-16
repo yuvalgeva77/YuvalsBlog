@@ -3,13 +3,16 @@ const Post=require('./database/models/Post')
 mongoose.connect('mongodb://localhost/test-blog')
 
 //add record
-// Post.create({
-//     title:'My second blog post',
-//     description:'second post description',
-//     content:'bla bla bla wooho.'
-// },(error,post)=>{
-//     console.log(error,post)
-// })
+Post.create({
+    title:'My second blog post',
+    description:'second post description',
+    content:'bla bla bla wooho.',
+    username: 'Yuval Geva'
+    
+
+},(error,post)=>{
+    console.log(error,post)
+})
 
 //find all
 // Post.find({}, (error,post)=>{
