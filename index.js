@@ -57,15 +57,16 @@ app.get('/posts/new', (req, res) => {
 app.post('/posts/store', (req, res) => {
        // console.log(req.body)
         //console.log(req.files)
-        const{image}=req.files
+        const {image}=req.files
         image.mv(path.resolve(__dirname,'public/posts', image.name),(error)=>{
-            console.log(path.resolve(__dirname,'public/posts', image.name))
-            Post.create(req.body,(error,post)=>{
+            //console.log(path.resolve(__dirname,'public/posts', image.name))
+            Post.create({...req.body, image:`/posts/${image.name}`},(error,post)=>{
+               
                 res.redirect('/')
 
         });
 
-    });
+    })
 });
 
 app.listen(3000, () => {
