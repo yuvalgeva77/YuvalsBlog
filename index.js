@@ -4,12 +4,7 @@ const { config, engine } = require('express-edge');
 const mongoose = require('mongoose')
 mongoose.connect('mongodb://localhost/blog')
 const fileUpload = require('express-fileupload');
-const validatePostMiddleware=(req,res,next)=>{
-    if(!req.body.title||!req.body.username||!req.body.description||!req.body.content||!req.files.image){
-        return res.redirect('/posts/new')
-    }
-    next()
-}
+const validatePost=require('./middleware/storePost')
 const createPostController=require('./controllers/createPost')
 const getPostController=require('./controllers/getPost')
 const homePageController=require('./controllers/homePage')
@@ -26,7 +21,7 @@ app.use(express.urlencoded({
   extended: true
 }));
 app.use(fileUpload());
-app.use('/posts/store',validatePostMiddleware)//activate validatePostMiddleware only before /posts/store
+app.use('/posts/store',validatePost)//activate validatePostMiddleware only before /posts/store
 
 app.get('/', homePageController)
 app.get('/post/:id', getPostController)
